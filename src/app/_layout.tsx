@@ -1,4 +1,4 @@
-import "@/css/global.css";
+import "@/global.css";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import {
   DarkTheme,
