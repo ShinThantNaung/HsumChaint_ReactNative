@@ -1,6 +1,12 @@
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cloneElement, isValidElement, ReactElement, ReactNode } from "react";
+import React, {
+  cloneElement,
+  ComponentPropsWithRef,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+} from "react";
 import {
   TextInput,
   TextInputProps,
@@ -36,9 +42,9 @@ export type TextboxProps = {
   leftIconButtonProps?: TouchableOpacityProps;
   rightIcon?: ReactNode;
   rightIconButtonProps?: TouchableOpacityProps;
-  disabled?: boolean;
-} & TextInputProps &
-  VariantProps<typeof textboxVariants>;
+} & VariantProps<typeof textboxVariants> &
+  ComponentPropsWithRef<typeof TextInput> &
+  TextInputProps;
 
 export const Textbox = ({
   variant,
@@ -47,7 +53,6 @@ export const Textbox = ({
   leftIconButtonProps,
   rightIcon,
   rightIconButtonProps,
-  disabled,
   className,
   ...props
 }: TextboxProps) => {
