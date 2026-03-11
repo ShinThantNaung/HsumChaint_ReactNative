@@ -79,7 +79,7 @@ export const Textbox = ({
       ) : null}
       <TextInput
         placeholderTextColor="#939393"
-        className="flex-1 text-base font-medium text-natural-black p-0 m-0"
+        className="flex-1 text-base leading-6 font-normal text-natural-black p-0 m-0"
         {...props}
       />
       {rIcon ? (
