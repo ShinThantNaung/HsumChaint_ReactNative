@@ -1,39 +1,31 @@
 import { cn } from "@/lib/utils";
-import { cva, VariantProps } from "class-variance-authority";
-import { cloneElement, isValidElement, ReactElement, ReactNode } from "react";
-import {
-  Text,
-  TouchableOpacity,
-  TouchableOpacityProps,
-  View,
-} from "react-native";
+import { type VariantProps, cva } from "class-variance-authority";
+import { type ReactElement, type ReactNode, cloneElement, isValidElement } from "react";
+import { Text, TouchableOpacity, type TouchableOpacityProps, View } from "react-native";
 
-const buttonVariants = cva(
-  "flex-row items-center justify-center rounded-xl gap-2.5",
-  {
-    variants: {
-      variant: {
-        primary: "bg-yellow-500",
-        secondary: "bg-yellow-500",
-        outline: "bg-natural-white border-yellow-700 border",
-      },
-      size: {
-        sm: "px-2 py-1.5",
-        md: "px-4 py-3",
-        lg: "px-5 py-4",
-      },
-      disabled: {
-        true: "bg-grey-400",
-        false: "",
-      },
+const buttonVariants = cva("flex-row items-center justify-center rounded-xl gap-2.5", {
+  variants: {
+    variant: {
+      primary: "bg-yellow-500",
+      secondary: "bg-yellow-500",
+      outline: "bg-natural-white border-yellow-700 border",
     },
-    defaultVariants: {
-      variant: "primary",
-      size: "md",
-      disabled: false,
+    size: {
+      sm: "px-2 py-1.5",
+      md: "px-4 py-3",
+      lg: "px-5 py-4",
+    },
+    disabled: {
+      true: "bg-grey-400",
+      false: "",
     },
   },
-);
+  defaultVariants: {
+    variant: "primary",
+    size: "md",
+    disabled: false,
+  },
+});
 
 const textVariants = cva("font-medium text-center leading-6 text-base", {
   variants: {
@@ -88,19 +80,14 @@ export const Button = ({
   className,
   ...props
 }: ButtonProps) => {
-  const iconColor = disabled
-    ? iconColorVariants.disable
-    : iconColorVariants[variant ?? "primary"];
+  const iconColor = disabled ? iconColorVariants.disable : iconColorVariants[variant ?? "primary"];
 
   const icon =
     leftIcon && isValidElement(leftIcon)
-      ? cloneElement(
-          leftIcon as ReactElement<{ color: string; size: number }>,
-          {
-            color: iconColor,
-            size: iconSizeVariants[size ?? "md"],
-          },
-        )
+      ? cloneElement(leftIcon as ReactElement<{ color: string; size: number }>, {
+          color: iconColor,
+          size: iconSizeVariants[size ?? "md"],
+        })
       : leftIcon;
 
   return (
@@ -111,11 +98,7 @@ export const Button = ({
       className={cn(buttonVariants({ variant, size, disabled }), className)}
     >
       {icon ? <View>{icon}</View> : null}
-      <Text
-        className={cn(textVariants({ variant, size, disabled }), textClassName)}
-      >
-        {title}
-      </Text>
+      <Text className={cn(textVariants({ variant, size, disabled }), textClassName)}>{title}</Text>
     </TouchableOpacity>
   );
 };

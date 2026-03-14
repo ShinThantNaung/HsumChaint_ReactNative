@@ -1,7 +1,7 @@
-import { PropsWithChildren } from "react";
-import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
+import type { PropsWithChildren } from "react";
+import { type Control, Controller, type FieldPath, type FieldValues } from "react-hook-form";
 import { Text, View } from "react-native";
-import { Textbox, TextboxProps } from "../textbox";
+import { Textbox, type TextboxProps } from "../textbox";
 
 export const FormContainer = ({ children }: PropsWithChildren) => {
   return <View className="gap-4">{children}</View>;
@@ -40,9 +40,7 @@ export const FormInputField = <
             className={fieldState.invalid ? "border-warning border" : ""}
           />
           {fieldState.error && (
-            <Text className="text-xs text-warning">
-              {fieldState.error.message}
-            </Text>
+            <Text className="text-xs text-warning">{fieldState.error.message}</Text>
           )}
         </View>
       )}

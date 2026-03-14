@@ -4,13 +4,7 @@ import { Textbox } from ".";
 
 describe("Textbox", () => {
   it("should render input with provided props", () => {
-    render(
-      <Textbox
-        testID="textbox-input"
-        placeholder="Email"
-        accessibilityLabel="email"
-      />,
-    );
+    render(<Textbox testID="textbox-input" placeholder="Email" accessibilityLabel="email" />);
 
     const input = screen.getByTestId("textbox-input");
     expect(input).toBeOnTheScreen();

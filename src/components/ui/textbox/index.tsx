@@ -1,17 +1,17 @@
 import { cn } from "@/lib/utils";
-import { cva, type VariantProps } from "class-variance-authority";
-import React, {
+import { type VariantProps, cva } from "class-variance-authority";
+import {
+  type ComponentPropsWithRef,
+  type ReactElement,
+  type ReactNode,
   cloneElement,
-  ComponentPropsWithRef,
   isValidElement,
-  ReactElement,
-  ReactNode,
 } from "react";
 import {
   TextInput,
-  TextInputProps,
+  type TextInputProps,
   TouchableOpacity,
-  TouchableOpacityProps,
+  type TouchableOpacityProps,
   View,
 } from "react-native";
 
@@ -58,38 +58,28 @@ export const Textbox = ({
 }: TextboxProps) => {
   const lIcon =
     leftIcon && isValidElement(leftIcon)
-      ? cloneElement(
-          leftIcon as ReactElement<{ color: string; size: number }>,
-          {
-            color: "#171007",
-            size: iconSizeVariants[size ?? "md"],
-          },
-        )
+      ? cloneElement(leftIcon as ReactElement<{ color: string; size: number }>, {
+          color: "#171007",
+          size: iconSizeVariants[size ?? "md"],
+        })
       : leftIcon;
   const rIcon =
     rightIcon && isValidElement(rightIcon)
-      ? cloneElement(
-          rightIcon as ReactElement<{ color: string; size: number }>,
-          {
-            color: "#171007",
-            size: iconSizeVariants[size ?? "md"],
-          },
-        )
+      ? cloneElement(rightIcon as ReactElement<{ color: string; size: number }>, {
+          color: "#171007",
+          size: iconSizeVariants[size ?? "md"],
+        })
       : rightIcon;
 
   return (
     <View className={cn(textboxVariants({ variant, size }), className)}>
-      {lIcon ? (
-        <TouchableOpacity {...leftIconButtonProps}>{lIcon}</TouchableOpacity>
-      ) : null}
+      {lIcon ? <TouchableOpacity {...leftIconButtonProps}>{lIcon}</TouchableOpacity> : null}
       <TextInput
         placeholderTextColor="#939393"
         className="flex-1 text-base leading-6 font-normal text-natural-black p-0 m-0"
         {...props}
       />
-      {rIcon ? (
-        <TouchableOpacity {...rightIconButtonProps}>{rIcon}</TouchableOpacity>
-      ) : null}
+      {rIcon ? <TouchableOpacity {...rightIconButtonProps}>{rIcon}</TouchableOpacity> : null}
     </View>
   );
 };

@@ -3,7 +3,7 @@ import { FormContainer, FormInputField } from "@/components/ui/form";
 import { Link } from "@/components/ui/link";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { View } from "react-native";
 import { z } from "zod";

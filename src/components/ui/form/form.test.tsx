@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@/lib/test-utils";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { Text } from "react-native";
 import { FormContainer, FormInputField } from ".";
@@ -57,14 +57,7 @@ describe("Form components", () => {
         setError("email", { type: "manual", message: "Required" });
       }, [setError]);
 
-      return (
-        <FormInputField
-          control={control}
-          name="email"
-          label="Email"
-          testID="email-input"
-        />
-      );
+      return <FormInputField control={control} name="email" label="Email" testID="email-input" />;
     };
 
     render(<TestForm />);

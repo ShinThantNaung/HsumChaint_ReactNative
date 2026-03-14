@@ -1,5 +1,4 @@
 import { render, screen } from "@/lib/test-utils";
-import React from "react";
 import { Link } from ".";
 
 jest.mock("expo-router", () => ({
@@ -22,9 +21,7 @@ describe("Link", () => {
   });
 
   it("should merge custom className and pass props", () => {
-    render(
-      <Link href="/login" className="font-semibold" accessibilityLabel="go" />,
-    );
+    render(<Link href="/login" className="font-semibold" accessibilityLabel="go" />);
 
     const link = screen.getByTestId("expo-link");
     expect(link.props.className).toContain("font-semibold");
