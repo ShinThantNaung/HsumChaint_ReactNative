@@ -7,7 +7,7 @@ on:
 
 jobs:
   check-title:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     permissions:
       pull-requests: read
     steps:
