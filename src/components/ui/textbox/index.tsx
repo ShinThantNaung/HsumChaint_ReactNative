@@ -76,7 +76,7 @@ export const Textbox = ({
       {lIcon ? <TouchableOpacity {...leftIconButtonProps}>{lIcon}</TouchableOpacity> : null}
       <TextInput
         placeholderTextColor="#939393"
-        className="flex-1 text-base leading-6 font-normal text-natural-black p-0 m-0"
+        className="flex-1 items-center text-[16px] text-natural-black"
         {...props}
       />
       {rIcon ? <TouchableOpacity {...rightIconButtonProps}>{rIcon}</TouchableOpacity> : null}

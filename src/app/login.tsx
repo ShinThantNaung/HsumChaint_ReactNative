@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { FormContainer, FormInputField } from "@/components/ui/form";
-import { Link } from "@/components/ui/link";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -57,9 +56,9 @@ export default function LoginTab() {
                 },
               }}
             />
-            <Link href={"/(tabs)/explore"} className="text-right">
+            {/* <Link href={"/(tabs)/explore"} className="text-right">
               Forgot Password?
-            </Link>
+            </Link> */}
           </View>
         </FormContainer>
         <Button title="Login" onPress={form.handleSubmit(onSubmit)} />
