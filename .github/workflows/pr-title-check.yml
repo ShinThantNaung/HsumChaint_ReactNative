@@ -1,0 +1,36 @@
+name: PR Title Check
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened]
+    branches: [main, staging, develop]
+
+jobs:
+  check-title:
+    runs-on: ubuntu-slim
+    permissions:
+      pull-requests: read
+    steps:
+      - name: Validate PR title (Conventional Commits)
+        uses: amannn/action-semantic-pull-request@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  notify-failure:
+    needs: check-title
+    if: failure()
+    uses: ./.github/workflows/reusable-telegram.yml
+    secrets: inherit
+    with:
+      format: HTML
+      message: |
+        <b>❌ PR Title Check Failed</b>
+
+        <b>Project:</b> React Native
+        <b>Actor:</b> ${{ github.actor }}
+        <b>Title:</b> <code>${{ github.event.pull_request.title }}</code>
+        <b>Branch:</b> <code>${{ github.head_ref }}</code> → <code>${{ github.base_ref }}</code>
+        <b>Run:</b> <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">View failed run</a>
+
+        <b>Please follow the Conventional Commits format.</b>
+        <i>e.g. feat: add login screen, fix: resolve crash on startup</i>

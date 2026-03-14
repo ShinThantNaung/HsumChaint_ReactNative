@@ -16,3 +16,19 @@ jobs:
       - uses: oven-sh/setup-bun@v1
       - run: bun install
       - run: bun run test:ci
+
+  notify-failure:
+    needs: [tests]
+    if: failure()
+    uses: ./.github/workflows/reusable-telegram.yml
+    secrets: inherit
+    with:
+      format: HTML
+      message: |
+        <b>❌ CI Pipeline Failed</b>
+
+        <b>Project:</b> React Native
+        <b>Actor:</b> ${{ github.actor }}
+        <b>PR:</b> ${{ github.event.pull_request.title }}
+        <b>Branch:</b> <code>${{ github.head_ref }}</code> → <code>${{ github.base_ref }}</code>
+        <b>Run:</b> <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">View failed run</a>

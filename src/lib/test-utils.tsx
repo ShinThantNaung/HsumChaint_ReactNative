@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react-native";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 
 const AllProviders = ({ children }: { children: ReactElement }) => {
   return children;

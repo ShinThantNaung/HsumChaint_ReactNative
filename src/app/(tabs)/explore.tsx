@@ -6,21 +6,9 @@ export default function TabTwoScreen() {
   return (
     <View className="flex-1 py-20 px-8 bg-white">
       <ScrollView contentContainerClassName="gap-4">
-        <Button
-          title="Login"
-          variant={"primary"}
-          leftIcon={<MaterialIcons name="login" />}
-        />
-        <Button
-          title="Login"
-          variant={"outline"}
-          leftIcon={<MaterialIcons name="login" />}
-        />
-        <Button
-          title="Login"
-          disabled
-          leftIcon={<MaterialIcons name="login" />}
-        />
+        <Button title="Login" variant={"primary"} leftIcon={<MaterialIcons name="login" />} />
+        <Button title="Login" variant={"outline"} leftIcon={<MaterialIcons name="login" />} />
+        <Button title="Login" disabled leftIcon={<MaterialIcons name="login" />} />
         <Button
           title="Login"
           variant={"primary"}
@@ -33,12 +21,7 @@ export default function TabTwoScreen() {
           variant={"outline"}
           leftIcon={<MaterialIcons name="login" />}
         />
-        <Button
-          title="Login"
-          size={"sm"}
-          disabled
-          leftIcon={<MaterialIcons name="login" />}
-        />
+        <Button title="Login" size={"sm"} disabled leftIcon={<MaterialIcons name="login" />} />
         <Button
           title="Login"
           size={"lg"}
@@ -51,12 +34,7 @@ export default function TabTwoScreen() {
           variant={"outline"}
           leftIcon={<MaterialIcons name="login" />}
         />
-        <Button
-          title="Login"
-          size={"lg"}
-          disabled
-          leftIcon={<MaterialIcons name="login" />}
-        />
+        <Button title="Login" size={"lg"} disabled leftIcon={<MaterialIcons name="login" />} />
         <Button title="Login" variant={"primary"} />
         <Button title="Login" variant={"outline"} />
         <Button title="Login" disabled />

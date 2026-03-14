@@ -12,4 +12,5 @@ config.transformer.minifierConfig = {
 
 module.exports = withUniwindConfig(config, {
   cssEntryFile: "./src/global.css",
+  dtsFile: "./src/uniwind-types.d.ts",
 });
