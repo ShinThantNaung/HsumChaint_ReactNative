@@ -9,11 +9,18 @@ jest.mock("expo-web-browser", () => ({
   },
 }));
 
+// Mock expo-router's Link to a plain pressable to avoid native module crashes
 jest.mock("expo-router", () => ({
   Link: (props: any) => {
     const { Text } = require("react-native");
     return <Text onPress={props.onPress}>{props.children}</Text>;
   },
+}));
+
+// Prevent expo-linking native module from initializing
+jest.mock("expo-linking", () => ({
+  createURL: jest.fn(),
+  parse: jest.fn(),
 }));
 
 describe("ExternalLink", () => {
@@ -22,18 +29,21 @@ describe("ExternalLink", () => {
     process.env.EXPO_OS = "ios";
   });
 
-  it("should be renders correctly with children", () => {
-    const { getByText } = render(<ExternalLink href="https://expo.dev">Test Link</ExternalLink>);
+  it("renders correctly with children", () => {
+    const { getByText } = render(
+      <ExternalLink href="https://expo.dev">Test Link</ExternalLink>,
+    );
     expect(getByText("Test Link")).toBeTruthy();
   });
 
-  it("should be opens browser when pressed on native platforms", async () => {
+  it("opens in-app browser when pressed on native platforms", async () => {
     process.env.EXPO_OS = "ios";
 
-    const { getByText } = render(<ExternalLink href="https://expo.dev">Open Link</ExternalLink>);
-    const link = getByText("Open Link");
+    const { getByText } = render(
+      <ExternalLink href="https://expo.dev">Open Link</ExternalLink>,
+    );
 
-    fireEvent.press(link, {
+    fireEvent.press(getByText("Open Link"), {
       preventDefault: jest.fn(),
     });
 
