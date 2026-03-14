@@ -12,7 +12,7 @@
     "lint": "biome lint --write ./src",
     "format": "biome format --write ./src",
     "check": "biome check --write ./src",
-    "test": "jest --watchAll",
+    "test": "jest --no-coverage --watchAll",
     "test:ci": "jest --coverage --passWithNoTests"
   },
   "dependencies": {
@@ -67,6 +67,7 @@
     "jest": "~29.7.0",
     "jest-expo": "~55.0.9",
     "lefthook": "^2.1.4",
+    "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "~5.9.3"
   },
