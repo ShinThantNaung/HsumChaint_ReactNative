@@ -1,8 +1,6 @@
 module.exports = {
   extends: ["@commitlint/config-conventional"],
   rules: {
-    // not allow to use uppercase letter in commit message
-    "subject-case": [0],
     // not allow to use more than 100 characters in commit message
     "header-max-length": [2, "always", 100],
     // not allow empty subject

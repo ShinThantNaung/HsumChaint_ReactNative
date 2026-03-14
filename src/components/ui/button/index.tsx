@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Pressable } from "react-native";
-import { ButtonProps } from "./button";
+import type { ButtonProps } from "./button";
 
 export const Button = ({ title, variant, size, ...props }: ButtonProps) => {
   return (
