@@ -1,13 +1,13 @@
 name: PR Title Check
 
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, edited, synchronize, reopened]
     branches: [main, staging, develop]
 
 jobs:
   check-title:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     permissions:
       pull-requests: read
     steps:
