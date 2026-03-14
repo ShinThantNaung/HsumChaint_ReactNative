@@ -1,0 +1,51 @@
+name: PR Notify
+
+on:
+  pull_request_target:
+    types: [opened, closed, synchronize]
+    branches: [main, staging, develop]
+
+jobs:
+  pr-opened:
+    if: github.event.action == 'opened'
+    uses: ./.github/workflows/reusable-telegram.yml
+    secrets: inherit
+    with:
+      format: HTML
+      message: |
+        <b>🔔 New PR Opened</b>
+
+        <b>Project:</b> React Native
+        <b>Actor:</b> ${{ github.actor }}
+        <b>Title:</b> ${{ github.event.pull_request.title }}
+        <b>Branch:</b> <code>${{ github.head_ref }}</code> → <code>${{ github.base_ref }}</code>
+        <b>Commit:</b> <a href="${{ github.event.pull_request.head.sha }}">${{ github.event.pull_request.head.sha }}</a>
+
+  pr-updated:
+    if: github.event.action == 'synchronize'
+    uses: ./.github/workflows/reusable-telegram.yml
+    secrets: inherit
+    with:
+      format: HTML
+      message: |
+        <b>🔄 PR Updated</b>
+        <b>Project:</b> React Native
+        <b>Actor:</b> ${{ github.actor }}
+        <b>Title:</b> ${{ github.event.pull_request.title }}
+        <b>Branch:</b> <code>${{ github.head_ref }}</code> → <code>${{ github.base_ref }}</code>
+        <b>Commit:</b> <a href="${{ github.event.pull_request.head.sha }}">${{ github.event.pull_request.head.sha }}</a>
+
+  pr-merged:
+    if: github.event.action == 'closed' && github.event.pull_request.merged == true
+    uses: ./.github/workflows/reusable-telegram.yml
+    secrets: inherit
+    with:
+      format: HTML
+      message: |
+        <b>🔔 PR Merged</b>
+
+        <b>Project:</b> React Native
+        <b>Actor:</b> ${{ github.actor }}
+        <b>Title:</b> ${{ github.event.pull_request.title }}
+        <b>Branch:</b> <code>${{ github.head_ref }}</code> → <code>${{ github.base_ref }}</code>
+        <b>Commit:</b> <a href="${{ github.event.pull_request.head.sha }}">${{ github.event.pull_request.head.sha }}</a>

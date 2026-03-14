@@ -1,5 +1,7 @@
 import type { Config } from "jest";
 
+const isCI = process.env.CI === "true";
+
 const config: Config = {
   preset: "jest-expo",
   testMatch: ["**/*.test.ts", "**/*.test.tsx"],
@@ -9,12 +11,30 @@ const config: Config = {
   ],
   collectCoverage: true,
   collectCoverageFrom: [
-    "src/**/*.{ts,tsx}",
+    // Only measure coverage on testable business logic
+    "src/components/**/*.{ts,tsx}",
+    "src/hooks/**/*.{ts,tsx}",
+    "src/lib/**/*.{ts,tsx}",
+    // Exclusions
     "!src/**/*.test.{ts,tsx}",
     "!src/**/*.d.ts",
+    "!src/**/*.web.{ts,tsx}",   // platform-specific variants
+    "!src/**/*.ios.{ts,tsx}",
+    "!src/**/*.android.{ts,tsx}",
   ],
-  coverageReporters: ["lcov", "html", "text"],
+  // HTML report is skipped on CI to save time and disk space
+  coverageReporters: isCI ? ["lcov", "text"] : ["lcov", "html", "text"],
   coverageDirectory: "coverage",
+  coverageThreshold: {
+    global: {
+      // Realistic target for a small team / one-month project.
+      // Raise gradually as test coverage grows.
+      statements: 50,
+      branches: 50,
+      functions: 50,
+      lines: 50,
+    },
+  },
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },

@@ -6,15 +6,16 @@ describe("Button", () => {
   const testId = "btn-login";
 
   beforeEach(() => {
-    render(<Button title="Login" testID={testId} onPress={onPress} />);
     onPress.mockClear();
   });
 
   it("should be render title correctly", () => {
+    render(<Button title="Login" testID={testId} onPress={onPress} />);
     expect(screen.getByTestId(testId)).toBeOnTheScreen();
   });
 
   it("should call onPress when pressed", () => {
+    render(<Button title="Login" testID={testId} onPress={onPress} />);
     const button = screen.getByTestId(testId);
     fireEvent(button, "press");
     expect(onPress).toHaveBeenCalledTimes(1);
