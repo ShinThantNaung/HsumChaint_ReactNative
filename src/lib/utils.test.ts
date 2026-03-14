@@ -26,8 +26,8 @@ describe("cn utility", () => {
   });
 
   it("should handle objects with boolean values", () => {
-    expect(
-      cn("base-class", { "active-class": true, "hidden-class": false }),
-    ).toBe("base-class active-class");
+    expect(cn("base-class", { "active-class": true, "hidden-class": false })).toBe(
+      "base-class active-class",
+    );
   });
 });
