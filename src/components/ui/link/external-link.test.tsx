@@ -30,18 +30,14 @@ describe("ExternalLink", () => {
   });
 
   it("renders correctly with children", () => {
-    const { getByText } = render(
-      <ExternalLink href="https://expo.dev">Test Link</ExternalLink>,
-    );
+    const { getByText } = render(<ExternalLink href="https://expo.dev">Test Link</ExternalLink>);
     expect(getByText("Test Link")).toBeTruthy();
   });
 
   it("opens in-app browser when pressed on native platforms", async () => {
     process.env.EXPO_OS = "ios";
 
-    const { getByText } = render(
-      <ExternalLink href="https://expo.dev">Open Link</ExternalLink>,
-    );
+    const { getByText } = render(<ExternalLink href="https://expo.dev">Open Link</ExternalLink>);
 
     fireEvent.press(getByText("Open Link"), {
       preventDefault: jest.fn(),
