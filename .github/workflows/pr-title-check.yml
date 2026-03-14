@@ -1,7 +1,7 @@
 name: PR Title Check
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, edited, synchronize, reopened]
     branches: [main, staging, develop]
 
@@ -26,9 +26,11 @@ jobs:
       message: |
         <b>❌ PR Title Check Failed</b>
 
-        <b>Project:</b> Node
+        <b>Project:</b> React Native
         <b>Actor:</b> ${{ github.actor }}
-        <b>Title:</b> ${{ github.event.pull_request.title }}
-        <b>Commit:</b> <a href="${{ github.event.pull_request.head.sha }}">${{ github.event.pull_request.head.sha }}</a>
-        <br><br/>
+        <b>Title:</b> <code>${{ github.event.pull_request.title }}</code>
+        <b>Branch:</b> <code>${{ github.head_ref }}</code> → <code>${{ github.base_ref }}</code>
+        <b>Run:</b> <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">View failed run</a>
+
         <b>Please follow the Conventional Commits format.</b>
+        <i>e.g. feat: add login screen, fix: resolve crash on startup</i>
