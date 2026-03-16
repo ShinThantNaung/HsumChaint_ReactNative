@@ -1,7 +1,9 @@
 import "@/global.css";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import { SafeAreaListener } from "react-native-safe-area-context";
 import { Uniwind } from "uniwind";
@@ -17,20 +19,18 @@ export default function RootLayout() {
         Uniwind.updateInsets(insets);
       }}
     >
-      <ThemeProvider value={DefaultTheme}>
-        <Stack initialRouteName="(auth)">
-          <Stack.Screen
-            name="login"
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
-          <Stack.Screen name="modal" options={{ presentation: "modal", title: "Modal" }} />
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
+      <GestureHandlerRootView>
+        <ThemeProvider value={DefaultTheme}>
+          <BottomSheetModalProvider>
+            <Stack initialRouteName="(auth)">
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
+              <Stack.Screen name="modal" options={{ presentation: "modal", title: "Modal" }} />
+            </Stack>
+            <StatusBar style="auto" />
+          </BottomSheetModalProvider>
+        </ThemeProvider>
+      </GestureHandlerRootView>
     </SafeAreaListener>
   );
 }

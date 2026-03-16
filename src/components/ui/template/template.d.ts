@@ -5,10 +5,11 @@ type DefaultTemplateProps = PropsWithChildren<ViewProps> & {
   bgImage?: ImageSourcePropType;
 };
 
-type HeaderTemplateProps = {
+type HeaderTemplateProps = DefaultTemplateProps & {
   headerTitle: string;
   showBack?: boolean;
   scrollable?: boolean;
+  templateClassName?: string;
   headerClassName?: string;
   childClassName?: string;
 };

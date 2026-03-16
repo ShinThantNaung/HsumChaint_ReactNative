@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority";
 import { Text as RnText } from "react-native";
 import type { TextProps } from "./text";
 
-export const textVariants = cva("", {
+export const textVariants = cva("text-natural-black", {
   variants: {
     variant: {
       title1: "text-7xl",
@@ -29,6 +29,7 @@ export const textVariants = cva("", {
       regular: "font-normal",
       medium: "font-medium",
       bold: "font-bold",
+      semibold: "font-semibold",
     },
   },
   defaultVariants: {

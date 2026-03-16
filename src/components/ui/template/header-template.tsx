@@ -15,14 +15,21 @@ export const HeaderTemplate = (props: PropsWithChildren<HeaderTemplateProps>) =>
     scrollable = false,
     headerClassName,
     childClassName,
+    templateClassName,
     children,
+    bgImage,
   } = props;
 
   const ChildView = scrollable ? ScrollView : View;
 
   return (
-    <DefaultTemplate className="flex-1">
-      <View className={cn("w-full flex-row items-center justify-between py-2", headerClassName)}>
+    <DefaultTemplate
+      bgImage={bgImage ?? images.bgFrame2}
+      className={cn("flex-1 px-safe-offset-0", templateClassName)}
+    >
+      <View
+        className={cn("w-full flex-row items-center justify-between py-2 px-5", headerClassName)}
+      >
         {showBack && (
           <Pressable
             style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
@@ -34,7 +41,12 @@ export const HeaderTemplate = (props: PropsWithChildren<HeaderTemplateProps>) =>
         <Text variant={"h6"} weight={"bold"} title={headerTitle} />
         <View className="w-6 h-6" />
       </View>
-      <ChildView className={cn("flex-1", childClassName)}>{children}</ChildView>
+      <ChildView
+        showsVerticalScrollIndicator={false}
+        className={cn("flex-1 px-safe-offset-5", childClassName)}
+      >
+        {children}
+      </ChildView>
     </DefaultTemplate>
   );
 };

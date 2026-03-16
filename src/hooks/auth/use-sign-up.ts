@@ -1,25 +1,28 @@
-import { loginSchema } from "@/schemas/login-schema";
+import { signUpSchema } from "@/schemas/sign-up-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { TextInput } from "react-native";
 import type z from "zod";
 
-export const useLogin = () => {
+export const useSignUp = () => {
   const form = useForm({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       phoneNo: "",
+      username: "",
       password: "",
+      confirmPassword: "",
+      email: "",
+      contactPhoneNo: "",
     },
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showRegisterModal, setShowRegisterModal] = useState(false);
 
   const passwordRef = useRef<TextInput>(null);
 
-  const onSubmit = (data: z.infer<typeof loginSchema>) => {
+  const onSubmit = (data: z.infer<typeof signUpSchema>) => {
     console.log(data);
     setShowSuccessModal(true);
   };
@@ -30,20 +33,13 @@ export const useLogin = () => {
 
   const closeSuccessModal = () => setShowSuccessModal(false);
 
-  const closeRegisterModal = () => setShowRegisterModal(false);
-
-  const openRegisterModal = () => setShowRegisterModal(true);
-
   return {
     form,
     showPassword,
     passwordRef,
     showSuccessModal,
-    showRegisterModal,
     toggleShowPassword,
     handleSubmit,
     closeSuccessModal,
-    closeRegisterModal,
-    openRegisterModal,
   };
 };
