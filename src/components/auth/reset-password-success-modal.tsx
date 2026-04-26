@@ -9,10 +9,8 @@ import { Text } from "../ui/text";
 type Props = {
   show: boolean;
   close: () => void;
-  goHome: () => void;
 };
-
-export const LoginSuccessModal = ({ show, close, goHome }: Props) => {
+export const ResetPasswordSuccessModal = ({ show, close }: Props) => {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   useEffect(() => {
@@ -23,8 +21,10 @@ export const LoginSuccessModal = ({ show, close, goHome }: Props) => {
     }
   }, [show]);
 
+  // callbacks
   const handleSheetChanges = useCallback(
     (index: number) => {
+      console.log("handleSheetChanges", index);
       if (index === -1) {
         close();
       }
@@ -45,9 +45,9 @@ export const LoginSuccessModal = ({ show, close, goHome }: Props) => {
         <View className="items-center justify-center w-20 h-20 mt-9 mb-4">
           <Image source={images.success} className="w-full h-full" />
         </View>
-        <Text title="Login Successful !" variant="h6" weight="semibold" />
+        <Text title="Password Reset Successful !" variant={"h6"} weight={"semibold"} />
         <View className="w-full pt-9">
-          <Button title="Go to home" onPress={goHome} />
+          <Button title="Login Again" onPress={close} />
         </View>
       </BottomSheetView>
     </BottomSheetModal>

@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
-import { type ReactElement, cloneElement, isValidElement } from "react";
+import { cloneElement, isValidElement, type ReactElement } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { cn } from "@/lib/utils";
 import type { ButtonProps } from "./button";
 
 export const buttonVariants = cva("flex-row items-center justify-center rounded-xl gap-2.5", {

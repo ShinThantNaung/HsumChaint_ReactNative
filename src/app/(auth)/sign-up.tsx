@@ -1,3 +1,8 @@
+import images from "@assets/images";
+import { useLocalSearchParams } from "expo-router";
+import { useState } from "react";
+import { View } from "react-native";
+import { AuthLoadingModal } from "@/components/auth";
 import { Button } from "@/components/ui/button";
 import { FormInputField } from "@/components/ui/form";
 import { Image } from "@/components/ui/image";
@@ -5,20 +10,18 @@ import { Link } from "@/components/ui/link";
 import { HeaderTemplate } from "@/components/ui/template";
 import { Text } from "@/components/ui/text";
 import { useSignUp } from "@/hooks/auth/use-sign-up";
-import images from "@assets/images";
-import { useLocalSearchParams } from "expo-router";
-import { View } from "react-native";
 
 type Params = {
-  role: "user" | "monk";
+  role?: "user" | "monk";
 };
 
 const SignUpScreen = () => {
   const { role } = useLocalSearchParams<Params>();
+  const registerRole = role ?? "monk";
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // TODO: control by role
-  console.log("role", role);
-  const { form, handleSubmit } = useSignUp();
+  const { form, handleSubmit, isPending } = useSignUp(registerRole);
   return (
     <HeaderTemplate
       templateClassName="pt-safe pb-0"
@@ -26,6 +29,7 @@ const SignUpScreen = () => {
       scrollable
       childClassName="pb-safe-offset-10"
     >
+      <AuthLoadingModal show={isPending} title="Creating account..." />
       <View className="py-[18px] items-center justify-center">
         <Image className="w-24 h-28" source={images.thaBate} />
       </View>
@@ -52,11 +56,11 @@ const SignUpScreen = () => {
           name="password"
           label="Password"
           placeholder="Set your password"
-          secureTextEntry
+          secureTextEntry={!showPassword}
           rightIcon={<Image source={images.eye} className="h-4 w-4" />}
-          // rightIconButtonProps={{
-          //   onPress: toggleShowPassword,
-          // }}
+          rightIconButtonProps={{
+            onPress: () => setShowPassword((prev) => !prev),
+          }}
         />
         <FormInputField
           required
@@ -64,12 +68,33 @@ const SignUpScreen = () => {
           name="confirmPassword"
           label="Confirm Password"
           placeholder="Confirm your password"
-          secureTextEntry
+          secureTextEntry={!showConfirmPassword}
           rightIcon={<Image source={images.eye} className="h-4 w-4" />}
-          // rightIconButtonProps={{
-          //   onPress: toggleShowPassword,
-          // }}
+          rightIconButtonProps={{
+            onPress: () => setShowConfirmPassword((prev) => !prev),
+          }}
         />
+
+        {registerRole !== "user" && (
+          <>
+            <Text title="Monastery Information" variant="label1" weight="bold" />
+            <FormInputField
+              required
+              control={form.control}
+              name="monasteryName"
+              label="Monastery Name"
+              placeholder="Enter your monastery name"
+            />
+            <FormInputField
+              required
+              control={form.control}
+              name="monasteryAddress"
+              label="Monastery Address"
+              placeholder="Enter your monastery address"
+            />
+          </>
+        )}
+
         <Text title="Contact Information" variant="label1" weight="bold" />
         <FormInputField
           optional
@@ -88,7 +113,7 @@ const SignUpScreen = () => {
           keyboardType="phone-pad"
         />
         <View className="py-5">
-          <Button title="Register" onPress={handleSubmit} />
+          <Button title="Register" onPress={handleSubmit} disabled={isPending} />
         </View>
         <View className="flex-row items-center justify-center gap-2 pt-7 pb-safe-offset-4">
           <Text title="Already have an account?" />

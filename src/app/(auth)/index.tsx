@@ -1,16 +1,12 @@
-import { RegisterModal } from "@/components/auth/register-modal";
+import images from "@assets/images";
+import { router } from "expo-router";
+import { View } from "react-native";
 import { Button } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
 import { DefaultTemplate } from "@/components/ui/template";
 import { Text } from "@/components/ui/text";
-import images from "@assets/images";
-import { router } from "expo-router";
-import { useState } from "react";
-import { View } from "react-native";
 
 const AuthScreen = () => {
-  const [showRegisterModal, setShowRegisterModal] = useState(false);
-
   return (
     <DefaultTemplate bgImage={images.bgFrame1}>
       <View className="pt-14 w-full pb-20 justify-center items-center">
@@ -26,10 +22,18 @@ const AuthScreen = () => {
         </View>
         <View className="w-full py-10 gap-4">
           <Button title="Login" onPress={() => router.navigate("/(auth)/login")} />
-          <Button variant={"outline"} title="SignUp" onPress={() => setShowRegisterModal(true)} />
+          <Button
+            variant={"outline"}
+            title="SignUp"
+            onPress={() =>
+              router.navigate({
+                pathname: "/(auth)/sign-up",
+                params: { role: "monk" },
+              })
+            }
+          />
         </View>
       </View>
-      <RegisterModal show={showRegisterModal} close={() => setShowRegisterModal(false)} />
     </DefaultTemplate>
   );
 };

@@ -1,8 +1,8 @@
-import { cn } from "@/lib/utils";
 import images from "@assets/images";
 import { router } from "expo-router";
 import type { PropsWithChildren } from "react";
 import { Pressable, ScrollView, View } from "react-native";
+import { cn } from "@/lib/utils";
 import { Image } from "../image";
 import { Text } from "../text";
 import { DefaultTemplate } from "./default-template";

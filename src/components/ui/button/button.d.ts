@@ -4,8 +4,8 @@ import { TouchableOpacityProps } from "react-native";
 import { buttonVariants } from ".";
 
 type ButtonProps = {
-  title: string;
-  leftIcon?: ReactNode;
-  textClassName?: string;
+	title: string;
+	leftIcon?: ReactNode;
+	textClassName?: string;
 } & VariantProps<typeof buttonVariants> &
-  TouchableOpacityProps;
+	TouchableOpacityProps;

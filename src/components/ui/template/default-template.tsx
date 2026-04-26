@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
 import { View as RnView } from "react-native";
 import { withUniwind } from "uniwind";
+import { cn } from "@/lib/utils";
 import { ImageBackground } from "../image";
 import type { DefaultTemplateProps } from "./template";
 
