@@ -4,6 +4,7 @@ import type { ComponentProps } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 
 import { Avatar } from "@/components/ui/avatar";
+import { Header } from "@/components/ui/header/header";
 
 type IconName = ComponentProps<typeof MaterialCommunityIcons>["name"];
 
@@ -13,12 +14,20 @@ type SettingsRowItem = {
   iconColor: string;
   iconBackground: string;
   isDanger?: boolean;
-  onPress?: () => void;
+  route:
+    | "/settingPage/edit-profile"
+    | "/settingPage/change-password"
+    | "/settingPage/delete-account"
+    | "/settingPage/notifications"
+    | "/settingPage/language"
+    | "/settingPage/schedule-reminder"
+    | "/login";
 };
 
 type SettingsSectionProps = {
   title: string;
   rows: SettingsRowItem[];
+  onNavigate: (route: SettingsRowItem["route"]) => void;
 };
 
 const accountRows: SettingsRowItem[] = [
@@ -27,12 +36,14 @@ const accountRows: SettingsRowItem[] = [
     iconName: "account-edit-outline",
     iconColor: "#260DB3",
     iconBackground: "#E1DCFF",
+    route: "/settingPage/edit-profile",
   },
   {
     title: "Change Password",
     iconName: "lock-reset",
     iconColor: "#08AE1B",
     iconBackground: "#E5FFE8",
+    route: "/settingPage/change-password",
   },
   {
     title: "Delete Account",
@@ -40,6 +51,7 @@ const accountRows: SettingsRowItem[] = [
     iconColor: "#AE1D1D",
     iconBackground: "#F3DEDE",
     isDanger: true,
+    route: "/settingPage/delete-account",
   },
 ];
 
@@ -49,12 +61,14 @@ const preferenceRows: SettingsRowItem[] = [
     iconName: "bell-outline",
     iconColor: "#260DB3",
     iconBackground: "#E1DCFF",
+    route: "/settingPage/notifications",
   },
   {
     title: "Language",
     iconName: "web",
     iconColor: "#CFB107",
     iconBackground: "#FFF3B0",
+    route: "/settingPage/language",
   },
 ];
 
@@ -64,17 +78,24 @@ const scheduleRows: SettingsRowItem[] = [
     iconName: "clock-outline",
     iconColor: "#A63807",
     iconBackground: "#FFE2D5",
+    route: "/settingPage/schedule-reminder",
   },
 ];
 
-function SettingsSection({ title, rows }: SettingsSectionProps) {
+function SettingsSection({ title, rows, onNavigate }: SettingsSectionProps) {
   return (
     <View className="mx-5 mt-5 rounded-3xl bg-[#FFF4E3] px-4 py-4">
       <Text className="text-[16px]/[22px] font-medium text-black">{title}</Text>
 
       <View className="mt-2">
         {rows.map((row) => (
-          <Pressable key={row.title} className="flex-row items-center py-3" onPress={row.onPress}>
+          <Pressable
+            key={row.title}
+            className="flex-row items-center py-3"
+            onPress={() => {
+              onNavigate(row.route);
+            }}
+          >
             <View
               className="h-7 w-7 items-center justify-center rounded-md"
               style={{ backgroundColor: row.iconBackground }}
@@ -100,30 +121,16 @@ function SettingsSection({ title, rows }: SettingsSectionProps) {
 
 export default function SettingsScreen() {
   const router = useRouter();
-
-  const accountRowsWithActions = accountRows.map((row) =>
-    row.title === "Change Password"
-      ? {
-          ...row,
-          onPress: () => {
-            router.push("/change-password" as never);
-          },
-        }
-      : row,
-  );
+  const handleNavigate = (route: SettingsRowItem["route"]) => {
+    router.push(route as never);
+  };
 
   return (
-    <View className="flex-1">
+    <View className="flex-1 bg-white">
       <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 24 }}>
-        <View className="items-center  px-8 pb-10 pt-20">
+        <View className="items-center  px-8 pb-10">
           <View className="w-full flex-row items-center justify-center">
-            <MaterialCommunityIcons
-              name="chevron-left"
-              size={30}
-              color="#171717"
-              style={{ position: "absolute", left: 0 }}
-            />
-            <Text className="text-4xl font-bold text-black">Settings</Text>
+            <Header title="Settings" />
           </View>
 
           <View className="mt-8 items-center">
@@ -134,12 +141,17 @@ export default function SettingsScreen() {
           </View>
         </View>
 
-        <SettingsSection title="Account" rows={accountRowsWithActions} />
-        <SettingsSection title="Preferences" rows={preferenceRows} />
-        <SettingsSection title="Schedule" rows={scheduleRows} />
+        <SettingsSection title="Account" rows={accountRows} onNavigate={handleNavigate} />
+        <SettingsSection title="Preferences" rows={preferenceRows} onNavigate={handleNavigate} />
+        <SettingsSection title="Schedule" rows={scheduleRows} onNavigate={handleNavigate} />
 
         <View className="mx-5 mt-5 rounded-2xl border border-[#DC2626] py-4">
-          <Pressable className="flex-row items-center justify-center w-362px h-48px">
+          <Pressable
+            className="flex-row items-center justify-center w-362px h-48px"
+            onPress={() => {
+              router.push("/login" as never);
+            }}
+          >
             <MaterialCommunityIcons name="logout" size={20} color="#AE1D1D" />
             <Text className="ml-2 text-[30px]/[38px] font-medium text-[#DC2626]">Logout</Text>
           </Pressable>

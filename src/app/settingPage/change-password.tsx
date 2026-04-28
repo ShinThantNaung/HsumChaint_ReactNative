@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { FormContainer, FormInputField } from "@/components/ui/form";
+import { Header } from "@/components/ui/header/header";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Stack, useRouter } from "expo-router";
@@ -42,18 +43,8 @@ export default function ChangePassword() {
   return (
     <View className="flex-1 bg-white">
       <Stack.Screen options={{ headerShown: false }} />
-      <View className=" px-4 pb-6 pt-10">
-        <View className="relative flex-row items-center justify-center py-2">
-          <Pressable
-            onPress={() => {
-              router.back();
-            }}
-            className="absolute left-0 h-10 w-10 items-start justify-center"
-          >
-            <MaterialCommunityIcons name="chevron-left" size={30} color="#171717" />
-          </Pressable>
-          <Text className="text-[20px]/[28px] font-bold text-black">Change Password</Text>
-        </View>
+      <View className="w-full flex-row items-center justify-center pb-10">
+        <Header title="Change Password" />
       </View>
 
       <ScrollView

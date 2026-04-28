@@ -1,16 +1,12 @@
 import { Stack } from "expo-router";
 
-import { SettingsDestinationScreen } from "@/components/settings/settings-destination-screen";
+import { Header } from "@/components/ui/header/header";
 
 export default function ScheduleReminderScreen() {
   return (
     <>
       <Stack.Screen options={{ title: "Schedule Reminder" }} />
-      <SettingsDestinationScreen
-        title="Schedule Reminder"
-        description="This page can hold reminder times and schedule controls."
-        accentColor="#FFE2D5"
-      />
+      <Header title="Schedule Reminder" />
     </>
   );
 }

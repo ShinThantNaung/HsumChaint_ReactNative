@@ -1,11 +1,12 @@
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { FormContainer, FormInputField } from "@/components/ui/form";
+import { Header } from "@/components/ui/header/header";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Stack, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 import { z } from "zod";
 
 const form = z.object({
@@ -31,18 +32,8 @@ export default function EditProfile() {
   return (
     <View className="flex-1 bg-white">
       <Stack.Screen options={{ headerShown: false }} />
-      <View className="h-[100px] px-4 pt-10">
-        <View className="relative flex-row items-center justify-center py-2">
-          <Pressable
-            onPress={() => {
-              router.back();
-            }}
-            className="absolute left-0 h-10 w-10 items-start justify-center"
-          >
-            <MaterialCommunityIcons name="chevron-left" size={30} color="#171717" />
-          </Pressable>
-          <Text className="text-[20px]/[28px] font-bold text-black">Edit Profile</Text>
-        </View>
+      <View className="w-full flex-row items-center justify-center">
+        <Header title="Edit Profile" />
       </View>
 
       <ScrollView
