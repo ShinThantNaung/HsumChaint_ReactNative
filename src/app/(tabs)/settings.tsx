@@ -149,7 +149,7 @@ export default function SettingsScreen() {
           <Pressable
             className="flex-row items-center justify-center w-362px h-48px"
             onPress={() => {
-              router.push("/settingPage/logoutModal");
+              router.push("/settingPage/logout-modal");
             }}
           >
             <MaterialCommunityIcons name="logout" size={20} color="#AE1D1D" />

@@ -28,7 +28,7 @@ export default function LanguageScreen() {
           <View className="rounded-xl border border-grey-200 bg-white px-4 py-4 shadow-sm">
             <Pressable
               onPress={() => {
-                router.push("/settingPage/languageModal");
+                router.push("/settingPage/language-modal");
               }}
               accessibilityRole="button"
               accessibilityLabel="Choose language"
