@@ -1,5 +1,6 @@
 import { HapticTab } from "@/components/ui/tab";
 import { Colors } from "@/constants/theme";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Tabs } from "expo-router";
 
 export default function TabLayout() {
@@ -27,6 +28,9 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: "Settings",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="settings" color={color} size={size} />
+          ),
         }}
       />
     </Tabs>
