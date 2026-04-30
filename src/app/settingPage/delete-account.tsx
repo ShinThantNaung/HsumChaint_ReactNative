@@ -6,7 +6,6 @@ export default function DeleteAccountScreen() {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      <Stack.Screen options={{ title: "Delete Account" }} />
       <Header title="Delete Account" />
     </>
   );

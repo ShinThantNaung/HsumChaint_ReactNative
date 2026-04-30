@@ -6,30 +6,18 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 
 export const unstable_settings = {
-  anchor: "(tabs)",
+  anchor: "(auth)",
 };
 
 export default function RootLayout() {
   return (
     <ThemeProvider value={DefaultTheme}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Stack initialRouteName="(tabs)">
+        <Stack initialRouteName="(auth)">
           <Stack.Screen
             name="login"
             options={{
               headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="change-password"
-            options={{
-              title: "Change Password",
-            }}
-          />
-          <Stack.Screen
-            name="edit-profile"
-            options={{
-              title: "Edit Profile",
             }}
           />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

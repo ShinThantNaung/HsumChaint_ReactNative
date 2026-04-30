@@ -154,7 +154,7 @@ export default function SettingsScreen() {
 
         <View className="mx-5 mt-5 rounded-2xl border border-[#DC2626] py-4">
           <Pressable
-            className="flex-row items-center justify-center w-362px h-48px"
+            className="flex-row items-center justify-center w-[362px] h-[48px]"
             onPress={() => {
               router.push("/settingPage/logout-modal");
             }}

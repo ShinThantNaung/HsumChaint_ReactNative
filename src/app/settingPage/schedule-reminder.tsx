@@ -5,7 +5,7 @@ import { Header } from "@/components/ui/header/header";
 export default function ScheduleReminderScreen() {
   return (
     <>
-      <Stack.Screen options={{ title: "Schedule Reminder" }} />
+      <Stack.Screen options={{ headerShown: false }} />
       <Header title="Schedule Reminder" />
     </>
   );

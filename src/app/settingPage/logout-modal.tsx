@@ -43,7 +43,7 @@ export default function LogoutModal() {
             size="lg"
             className="flex-1 bg-[#F2A64B]"
             onPress={() => {
-              router.push("/login" as never);
+              router.replace("/login" as never);
             }}
           />
         </View>
