@@ -38,7 +38,11 @@ export default function EditProfile() {
 
       <ScrollView
         className="flex-1 bg-white"
-        contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 20, paddingBottom: 28 }}
+        contentContainerStyle={{
+          paddingHorizontal: 20,
+          paddingTop: 20,
+          paddingBottom: 28,
+        }}
       >
         <View className="mt-4 items-center">
           <View className="relative">
