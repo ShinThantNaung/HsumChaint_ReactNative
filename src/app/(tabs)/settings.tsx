@@ -2,6 +2,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useRouter } from "expo-router";
 import type { ComponentProps } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
+import "../../global.css";
 
 import { Avatar } from "@/components/ui/avatar";
 import { Header } from "@/components/ui/header/header";
@@ -84,7 +85,7 @@ const scheduleRows: SettingsRowItem[] = [
 
 function SettingsSection({ title, rows, onNavigate }: SettingsSectionProps) {
   return (
-    <View className="mx-5 mt-5 rounded-3xl bg-[#FFF4E3] px-4 py-4">
+    <View className="mx-5 mt-5 rounded-3xl bg-yellow-100 px-4 py-4">
       <Text className="text-[16px]/[22px] font-medium text-black">{title}</Text>
 
       <View className="mt-2">

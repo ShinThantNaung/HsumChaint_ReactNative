@@ -1,8 +1,10 @@
 import { Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Header } from "@/components/ui/header/header";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { Pressable, ScrollView, Text, View } from "react-native";
+import "../../global.css";
 
 const personalInformation = [
   { label: "Name", value: "U Law Ti Ka" },
@@ -30,23 +32,8 @@ function InfoRow({ label, value }: InfoRowProps) {
   );
 }
 
-type InfoCardProps = {
-  title: string;
-  rows: Array<{ label: string; value: string }>;
-};
-
-function InfoCard({ title, rows }: InfoCardProps) {
-  return (
-    <View className="rounded-[22px] bg-[#FBE7C2] px-4 py-4">
-      <Text className="mb-2 text-[17px]/[24px] font-semibold text-black">{title}</Text>
-      {rows.map((row) => (
-        <InfoRow key={row.label} label={row.label} value={row.value} />
-      ))}
-    </View>
-  );
-}
-
 export default function ProfileScreen() {
+  const router = useRouter();
   return (
     <View className="flex-1 bg-white">
       <Stack.Screen options={{ headerShown: false }} />
@@ -74,17 +61,26 @@ export default function ProfileScreen() {
             </Pressable>
           </View>
         </View>
-        <View className="mx-5 mt-10 rounded-3xl bg-[#FFF4E3] px-4 py-4">
+        <View className="mx-5 mt-10 rounded-3xl bg-yellow-200 px-4 pt-4 pb-2">
           <Text className="text-[16px]/[22px] font-medium text-black">Personal Information</Text>
           {personalInformation.map((row) => (
             <InfoRow key={row.label} label={row.label} value={row.value} />
           ))}
         </View>
-        <View className="mx-5 mt-3 rounded-3xl bg-[#FFF4E3] px-4 py-4">
+        <View className="mx-5 mt-3 rounded-3xl bg-yellow-200 px-4 pt-4 pb-2">
           <Text className="text-[16px]/[22px] font-medium text-black">Contact Information</Text>
           {contactInformation.map((row) => (
             <InfoRow key={row.label} label={row.label} value={row.value} />
           ))}
+        </View>
+        <View className="flex justify-end mt-6 px-5">
+          <Button
+            title="Edit"
+            onPress={() => {
+              router.push("/settingPage/edit-profile");
+            }}
+            size="lg"
+          />
         </View>
       </ScrollView>
     </View>
