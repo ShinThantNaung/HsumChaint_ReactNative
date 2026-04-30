@@ -135,8 +135,14 @@ export default function SettingsScreen() {
 
           <View className="mt-8 items-center">
             <Avatar source={require("../../../assets/images/icon.png")} size={128} />
-
-            <Text className="mt-4 text-2xl font-semibold text-black">U Law Ti Ka</Text>
+            <Pressable
+              className="rounded-md px-3"
+              onPress={() => {
+                router.push("/settingPage/profile");
+              }}
+            >
+              <Text className="mt-4 text-2xl font-semibold text-black">U Law Ti Ka</Text>
+            </Pressable>
             <Text className="mt-1 text-base text-[#4B4B4B]">+95 9 422 675 753</Text>
           </View>
         </View>
