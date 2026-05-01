@@ -1,11 +1,10 @@
-import { cn } from "@/lib/utils";
-import { type VariantProps, cva } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import {
   type ComponentPropsWithRef,
-  type ReactElement,
-  type ReactNode,
   cloneElement,
   isValidElement,
+  type ReactElement,
+  type ReactNode,
 } from "react";
 import {
   TextInput,
@@ -14,6 +13,7 @@ import {
   type TouchableOpacityProps,
   View,
 } from "react-native";
+import { cn } from "@/lib/utils";
 
 const textboxVariants = cva("flex-row items-center rounded-lg gap-1.5", {
   variants: {
@@ -76,7 +76,7 @@ export const Textbox = ({
       {lIcon ? <TouchableOpacity {...leftIconButtonProps}>{lIcon}</TouchableOpacity> : null}
       <TextInput
         placeholderTextColor="#939393"
-        className="flex-1 text-base leading-6 font-normal text-natural-black p-0 m-0"
+        className="flex-1 items-center text-[16px] text-natural-black"
         {...props}
       />
       {rIcon ? <TouchableOpacity {...rightIconButtonProps}>{rIcon}</TouchableOpacity> : null}
