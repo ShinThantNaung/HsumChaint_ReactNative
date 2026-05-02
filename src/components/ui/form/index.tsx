@@ -14,6 +14,8 @@ export type FormInputFieldProps<
   control: Control<TFieldValues>;
   name: TName;
   label: string;
+  required?: boolean;
+  optional?: boolean;
 } & TextboxProps;
 
 export const FormInputField = <
@@ -23,6 +25,8 @@ export const FormInputField = <
   control,
   name,
   label,
+  required,
+  optional,
   ...props
 }: FormInputFieldProps<TFieldValues, TName>) => {
   return (
@@ -31,7 +35,11 @@ export const FormInputField = <
       name={name}
       render={({ field, fieldState }) => (
         <View className="gap-2">
-          <Text className="font-medium text-base leading-6">{label}</Text>
+          <View className="flex-row items-center justify-start gap-1">
+            <Text className="font-medium text-base leading-6">{label}</Text>
+            {required && <Text className="text-warning font-medium">*</Text>}
+            {optional && <Text className="text-gray-500 font-medium">(Optional)</Text>}
+          </View>
           <Textbox
             ref={field.ref}
             value={field.value}
