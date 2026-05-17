@@ -9,4 +9,6 @@ export const endpoints = {
   register: "auth/register",
   forgotPassword: "auth/forgot-password",
   resetPassword: "auth/reset-password",
+  users: "users",
+  currentUser: "users/me",
 };

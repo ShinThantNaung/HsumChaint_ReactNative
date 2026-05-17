@@ -1,6 +1,7 @@
 import ky, { type HTTPError, isHTTPError } from "ky";
 import { apiPrefix, apiUrl, apiVersion } from "@/constants/config";
 import { ApiError, normalizeApiError } from "@/lib/api-error";
+import { useAuthUser } from "@/stores/auth-user";
 
 const apiPrefixUrl = [apiUrl.replace(/\/$/, ""), apiPrefix, apiVersion].join("/");
 
@@ -21,7 +22,15 @@ const buildApiError = async (error: HTTPError) => {
 export const apiInstance = ky.create({
   prefix: apiPrefixUrl,
   hooks: {
-    beforeRequest: [],
+    beforeRequest: [
+      (state) => {
+        const token = useAuthUser.getState().accessToken;
+
+        if (token) {
+          state.request.headers.set("Authorization", `Bearer ${token}`);
+        }
+      },
+    ],
     afterResponse: [],
     beforeError: [
       async ({ error }) => {

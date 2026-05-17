@@ -1,22 +1,30 @@
-import { Button } from "@/components/ui/button";
-import { Header } from "@/components/ui/header/header";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Stack, useRouter } from "expo-router";
+import { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
+import { LanguageModal, languages } from "@/components/settings/language-modal";
+import { Button } from "@/components/ui/button";
+import { Header } from "@/components/ui/header/";
 
-const currentLanguage = "English (US)";
+const initialLanguage = languages[0].value;
 
 export default function LanguageScreen() {
   const router = useRouter();
+  const [showLanguageModal, setShowLanguageModal] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] =
+    useState<(typeof languages)[number]["value"]>(initialLanguage);
+
+  const currentLanguage =
+    languages.find((language) => language.value === selectedLanguage)?.label ?? languages[0].label;
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="relative flex-1 bg-transparent">
       <Stack.Screen options={{ headerShown: false }} />
       <View className="w-full flex-row items-center justify-center">
         <Header title="Language" />
       </View>
       <ScrollView
-        className="flex-1 bg-white"
+        className="flex-1 bg-transparent"
         contentContainerStyle={{
           flexGrow: 1,
           paddingHorizontal: 20,
@@ -24,11 +32,11 @@ export default function LanguageScreen() {
           paddingBottom: 28,
         }}
       >
-        <View className="flex-1">
+        <View className="flex-1 bg-transparent">
           <View className="rounded-xl border border-grey-200 bg-white px-4 py-4 shadow-sm">
             <Pressable
               onPress={() => {
-                router.push("/settingPage/language-modal");
+                setShowLanguageModal(true);
               }}
               accessibilityRole="button"
               accessibilityLabel="Choose language"
@@ -71,6 +79,21 @@ export default function LanguageScreen() {
           </View>
         </View>
       </ScrollView>
+
+      <LanguageModal
+        show={showLanguageModal}
+        close={() => {
+          setShowLanguageModal(false);
+        }}
+        selectedLanguage={selectedLanguage}
+        onSelect={(value) => {
+          setSelectedLanguage(value);
+        }}
+        onSave={() => {
+          console.log("Selected language:", selectedLanguage);
+          setShowLanguageModal(false);
+        }}
+      />
     </View>
   );
 }

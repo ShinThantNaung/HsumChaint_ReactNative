@@ -1,8 +1,8 @@
-import type { Config } from "jest";
+import type { Config } from "@jest/types";
 
 const isCI = process.env.CI === "true";
 
-const config: Config = {
+const config: Config.InitialOptions = {
   preset: "jest-expo",
   testMatch: ["**/*.test.ts", "**/*.test.tsx"],
   watchPathIgnorePatterns: ["/node_modules/", "/app/"],

@@ -4,6 +4,7 @@ import { View } from "react-native";
 import { Button } from "@/components/ui/button";
 import { DefaultTemplate } from "@/components/ui/template";
 import { Text } from "@/components/ui/text";
+import { queryClient } from "@/lib/utils";
 import { useAuthUser } from "@/stores/auth-user";
 
 export default function HomeScreen() {
@@ -12,6 +13,7 @@ export default function HomeScreen() {
 
   const handleLogout = () => {
     clearSession();
+    queryClient.clear();
     router.replace("/(auth)" as never);
   };
 

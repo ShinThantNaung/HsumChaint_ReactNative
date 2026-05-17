@@ -1,21 +1,11 @@
-import { Avatar } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Header } from "@/components/ui/header/header";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Stack, useRouter } from "expo-router";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import "../../global.css";
-
-const personalInformation = [
-  { label: "Name", value: "U Law Ti Ka" },
-  { label: "Role", value: "Owner" },
-];
-
-const contactInformation = [
-  { label: "Phone", value: "09 422 675 753" },
-  { label: "Email", value: "lawtika@gmail.com" },
-  { label: "Address", value: "Min Ye Kyaw Swar Street" },
-];
+import { Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Header } from "@/components/ui/header/";
+import { useCurrentUser } from "@/hooks/users";
+import { useAuthUser } from "@/stores/auth-user";
 
 type InfoRowProps = {
   label: string;
@@ -34,16 +24,40 @@ function InfoRow({ label, value }: InfoRowProps) {
 
 export default function ProfileScreen() {
   const router = useRouter();
+  const sessionUser = useAuthUser((state) => state.user);
+  const { data: currentUser } = useCurrentUser();
+
+  const displayName = currentUser?.name ?? currentUser?.username ?? sessionUser?.username ?? "User";
+  const displayRole = currentUser?.role ?? currentUser?.userType ?? sessionUser?.userType ?? "-";
+  const displayPhone =
+    currentUser?.contactNo ??
+    currentUser?.contactPhone ??
+    currentUser?.phone ??
+    sessionUser?.phone ??
+    "-";
+  const displayEmail = currentUser?.email ?? sessionUser?.email ?? "-";
+  const displayAddress = currentUser?.address ?? currentUser?.monkProfile?.monasteryAddress ?? "-";
+
+  const personalInformation = [
+    { label: "Name", value: displayName },
+    { label: "Role", value: displayRole },
+  ];
+
+  const contactInformation = [
+    { label: "Phone", value: displayPhone },
+    { label: "Email", value: displayEmail },
+    { label: "Address", value: displayAddress },
+  ];
+
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-transparent">
       <Stack.Screen options={{ headerShown: false }} />
-      <View className="w-full flex-row items-center items-center">
+      <View className="w-full flex-row items-center">
         <Header title="Profile" />
       </View>
       <ScrollView
-        className="flex-1 bg-white"
+        className="flex-1 bg-transparent"
         contentContainerStyle={{
-          paddingHorizontal: 20,
           paddingTop: 20,
           paddingBottom: 28,
         }}
@@ -61,23 +75,23 @@ export default function ProfileScreen() {
             </Pressable>
           </View>
         </View>
-        <View className="mx-5 mt-10 rounded-3xl bg-yellow-200 px-4 pt-4 pb-2">
+        <View className="mx-2 mt-10 rounded-3xl bg-yellow-200 px-4 pt-4 pb-2">
           <Text className="text-[16px]/[22px] font-medium text-black">Personal Information</Text>
           {personalInformation.map((row) => (
             <InfoRow key={row.label} label={row.label} value={row.value} />
           ))}
         </View>
-        <View className="mx-5 mt-3 rounded-3xl bg-yellow-200 px-4 pt-4 pb-2">
+        <View className="mx-2 mt-3 rounded-3xl bg-yellow-200 px-4 pt-4 pb-2">
           <Text className="text-[16px]/[22px] font-medium text-black">Contact Information</Text>
           {contactInformation.map((row) => (
             <InfoRow key={row.label} label={row.label} value={row.value} />
           ))}
         </View>
-        <View className="flex justify-end mt-6 px-5">
+        <View className="flex justify-end mt-6 px-5 w-full">
           <Button
             title="Edit"
             onPress={() => {
-              router.push("/settingPage/edit-profile");
+              router.push("/edit-profile");
             }}
             size="lg"
           />

@@ -10,9 +10,10 @@ export function Header({ title }: HeaderProps) {
   const router = useRouter();
 
   return (
-    <View className="flex-1 bg-white px-4 pt-10">
+    <View className="flex-1 bg-transparent px-4 pt-10">
       <View className="relative flex-row items-center justify-center py-2">
         <Pressable
+          testID="header-back-button"
           onPress={() => {
             router.back();
           }}

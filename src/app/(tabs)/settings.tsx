@@ -1,11 +1,16 @@
+import images from "@assets/images";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useRouter } from "expo-router";
 import type { ComponentProps } from "react";
+import { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import "../../global.css";
-
+import { LogoutModal } from "@/components/settings/logout-modal";
 import { Avatar } from "@/components/ui/avatar";
-import { Header } from "@/components/ui/header/header";
+import { Header } from "@/components/ui/header/";
+import { DefaultTemplate } from "@/components/ui/template";
+import { useCurrentUser } from "@/hooks/users";
+import { queryClient } from "@/lib/utils";
+import { useAuthUser } from "@/stores/auth-user";
 
 type IconName = ComponentProps<typeof MaterialCommunityIcons>["name"];
 
@@ -16,12 +21,12 @@ type SettingsRowItem = {
   iconBackground: string;
   isDanger?: boolean;
   route:
-    | "/settingPage/edit-profile"
-    | "/settingPage/change-password"
-    | "/settingPage/delete-account"
-    | "/settingPage/notifications"
-    | "/settingPage/language"
-    | "/settingPage/schedule-reminder"
+    | "/edit-profile"
+    | "/change-password"
+    | "/delete-account"
+    | "/notifications"
+    | "/language"
+    | "/schedule-reminder"
     | "/login";
 };
 
@@ -37,14 +42,14 @@ const accountRows: SettingsRowItem[] = [
     iconName: "account-edit-outline",
     iconColor: "#260DB3",
     iconBackground: "#E1DCFF",
-    route: "/settingPage/edit-profile",
+    route: "/edit-profile",
   },
   {
     title: "Change Password",
     iconName: "lock-reset",
     iconColor: "#08AE1B",
     iconBackground: "#E5FFE8",
-    route: "/settingPage/change-password",
+    route: "/change-password",
   },
   {
     title: "Delete Account",
@@ -52,7 +57,7 @@ const accountRows: SettingsRowItem[] = [
     iconColor: "#AE1D1D",
     iconBackground: "#F3DEDE",
     isDanger: true,
-    route: "/settingPage/delete-account",
+    route: "/delete-account",
   },
 ];
 
@@ -62,14 +67,14 @@ const preferenceRows: SettingsRowItem[] = [
     iconName: "bell-outline",
     iconColor: "#260DB3",
     iconBackground: "#E1DCFF",
-    route: "/settingPage/notifications",
+    route: "/notifications",
   },
   {
     title: "Language",
     iconName: "web",
     iconColor: "#CFB107",
     iconBackground: "#FFF3B0",
-    route: "/settingPage/language",
+    route: "/language",
   },
 ];
 
@@ -79,13 +84,13 @@ const scheduleRows: SettingsRowItem[] = [
     iconName: "clock-outline",
     iconColor: "#A63807",
     iconBackground: "#FFE2D5",
-    route: "/settingPage/schedule-reminder",
+    route: "/schedule-reminder",
   },
 ];
 
 function SettingsSection({ title, rows, onNavigate }: SettingsSectionProps) {
   return (
-    <View className="mx-5 mt-5 rounded-3xl bg-yellow-100 px-4 py-4">
+    <View className="mx-2 mt-5 rounded-3xl bg-yellow-100 px-4 py-4">
       <Text className="text-[16px]/[22px] font-medium text-black">{title}</Text>
 
       <View className="mt-2">
@@ -122,14 +127,30 @@ function SettingsSection({ title, rows, onNavigate }: SettingsSectionProps) {
 
 export default function SettingsScreen() {
   const router = useRouter();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const sessionUser = useAuthUser((state) => state.user);
+  const { data: currentUser } = useCurrentUser();
+
+  const displayName = currentUser?.name ?? currentUser?.username ?? sessionUser?.username ?? "User";
+  const displayPhone =
+    currentUser?.contactNo ??
+    currentUser?.contactPhone ??
+    currentUser?.phone ??
+    sessionUser?.phone ??
+    "";
+
   const handleNavigate = (route: SettingsRowItem["route"]) => {
-    router.push(route as never);
+    router.push(route);
   };
 
   return (
-    <View className="flex-1 bg-white">
-      <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 24 }}>
-        <View className="items-center  px-8 pb-10">
+    <DefaultTemplate bgImage={images.bgFrame2} className="relative">
+      <ScrollView
+        className="flex-1 bg-transparent"
+        contentContainerStyle={{ paddingBottom: 24 }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View className="items-center px-2 pb-10">
           <View className="w-full flex-row items-center justify-center">
             <Header title="Settings" />
           </View>
@@ -139,12 +160,12 @@ export default function SettingsScreen() {
             <Pressable
               className="rounded-md px-3"
               onPress={() => {
-                router.push("/settingPage/profile");
+                router.push("/profile");
               }}
             >
-              <Text className="mt-4 text-2xl font-semibold text-black">U Law Ti Ka</Text>
+              <Text className="mt-4 text-2xl font-semibold text-black">{displayName}</Text>
             </Pressable>
-            <Text className="mt-1 text-base text-[#4B4B4B]">+95 9 422 675 753</Text>
+            <Text className="mt-1 text-base text-[#4B4B4B]">{displayPhone || "-"}</Text>
           </View>
         </View>
 
@@ -152,18 +173,30 @@ export default function SettingsScreen() {
         <SettingsSection title="Preferences" rows={preferenceRows} onNavigate={handleNavigate} />
         <SettingsSection title="Schedule" rows={scheduleRows} onNavigate={handleNavigate} />
 
-        <View className="mx-5 mt-5 rounded-2xl border border-[#DC2626] py-4">
+        <View className="mx-2 mt-5 rounded-2xl border border-[#DC2626] py-4">
           <Pressable
-            className="flex-row items-center justify-center w-[362px] h-[48px]"
+            className="h-[48px] w-full flex-row items-center justify-center gap-2"
             onPress={() => {
-              router.push("/settingPage/logout-modal");
+              setShowLogoutModal(true);
             }}
           >
             <MaterialCommunityIcons name="logout" size={20} color="#AE1D1D" />
-            <Text className="ml-2 text-[30px]/[38px] font-medium text-[#DC2626]">Logout</Text>
+            <Text className="text-[18px]/[24px] font-medium text-[#DC2626]">Logout</Text>
           </Pressable>
         </View>
       </ScrollView>
-    </View>
+
+      <LogoutModal
+        show={showLogoutModal}
+        close={() => {
+          setShowLogoutModal(false);
+        }}
+        confirm={() => {
+          setShowLogoutModal(false);
+          queryClient.clear();
+          router.replace("/login" as never);
+        }}
+      />
+    </DefaultTemplate>
   );
 }

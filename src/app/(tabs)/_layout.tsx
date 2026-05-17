@@ -5,6 +5,7 @@ import { HapticTab } from "@/components/ui/tab";
 export default function TabLayout() {
   return (
     <Tabs
+      sceneContainerStyle={{ backgroundColor: "transparent" }}
       screenOptions={{
         headerShown: false,
         tabBarButton: HapticTab,

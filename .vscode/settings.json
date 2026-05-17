@@ -52,5 +52,9 @@
     "headerClassName",
     "childClassName"
   ],
-  "tailwindCSS.classFunctions": ["useResolveClassNames", "cva"]
+  "tailwindCSS.classFunctions": [
+    "useResolveClassNames",
+    "cva"
+  ],
+  "js/ts.tsdk.path": "node_modules\\typescript\\lib"
 }

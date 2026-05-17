@@ -1,11 +1,5 @@
-import { Image, type ImageSourcePropType, View } from "react-native";
-
-type AvatarProps = {
-  source: ImageSourcePropType;
-  size: number;
-  backgroundColor?: string;
-  imageScale?: number;
-};
+import { Image, View } from "react-native";
+import type { AvatarProps } from "./avatar";
 
 export function Avatar({
   source,

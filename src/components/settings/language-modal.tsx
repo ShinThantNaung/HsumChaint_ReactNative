@@ -1,6 +1,4 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { Stack, useRouter } from "expo-router";
-import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
@@ -13,20 +11,33 @@ import Animated, {
 
 import { Button } from "@/components/ui/button";
 
-const languages = [
+export const languages = [
   { label: "English (US)", value: "en-US" },
   { label: "Myanmar (Burmese)", value: "my-MM" },
 ] as const;
 
-export default function LanguageModal() {
-  const router = useRouter();
-  const [selectedLanguage, setSelectedLanguage] =
-    useState<(typeof languages)[number]["value"]>("en-US");
+type LanguageValue = (typeof languages)[number]["value"];
+
+type LanguageModalProps = {
+  show: boolean;
+  close: () => void;
+  selectedLanguage: LanguageValue;
+  onSelect: (value: LanguageValue) => void;
+  onSave: () => void;
+};
+
+export function LanguageModal({
+  show,
+  close,
+  selectedLanguage,
+  onSelect,
+  onSave,
+}: LanguageModalProps) {
   const translateY = useSharedValue(0);
   const backdropOpacity = useSharedValue(1);
 
   const dismiss = () => {
-    router.back();
+    close();
   };
 
   const handleGesture = Gesture.Pan()
@@ -54,16 +65,39 @@ export default function LanguageModal() {
   }));
 
   const backdropStyle = useAnimatedStyle(() => ({
-    opacity: backdropOpacity.value * 1,
+    opacity: backdropOpacity.value,
   }));
 
+  if (!show) {
+    return null;
+  }
+
   return (
-    <View className="flex-1 justify-end bg-black/20">
-      <Stack.Screen options={{ headerShown: false, presentation: "transparentModal" }} />
+    <View className="absolute inset-0 justify-end bg-transparent">
+      <Animated.View
+        style={[
+          backdropStyle,
+          {
+            backgroundColor: "rgba(0,0,0,0.35)",
+            zIndex: 10,
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+          },
+        ]}
+      />
 
-      <Animated.View style={backdropStyle} className="absolute inset-0 bg-black/20" />
+      <Pressable
+        style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 11 }}
+        onPress={close}
+      />
 
-      <Animated.View style={sheetStyle} className="rounded-t-[28px] bg-white px-4 pb-6 pt-3">
+      <Animated.View
+        style={[sheetStyle, { zIndex: 20 }]}
+        className="rounded-t-[28px] bg-white px-4 pb-6 pt-3"
+      >
         <GestureDetector gesture={handleGesture}>
           <View className="mb-3 items-center">
             <View className="h-1.5 w-14 rounded-full bg-grey-300" />
@@ -77,9 +111,7 @@ export default function LanguageModal() {
           </View>
 
           <Pressable
-            onPress={() => {
-              router.back();
-            }}
+            onPress={close}
             accessibilityRole="button"
             accessibilityLabel="Close language modal"
             hitSlop={10}
@@ -99,7 +131,7 @@ export default function LanguageModal() {
               <Pressable
                 key={language.value}
                 onPress={() => {
-                  setSelectedLanguage(language.value);
+                  onSelect(language.value);
                 }}
                 accessibilityRole="radio"
                 accessibilityState={{ selected: isSelected }}
@@ -121,12 +153,11 @@ export default function LanguageModal() {
           size="lg"
           className="mt-5 w-full rounded-xl bg-[#F0B24D] py-4"
           textClassName="text-[18px] leading-6 font-medium text-black"
-          onPress={() => {
-            console.log("Selected language:", selectedLanguage);
-            router.back();
-          }}
+          onPress={onSave}
         />
       </Animated.View>
     </View>
   );
 }
+
+export default LanguageModal;

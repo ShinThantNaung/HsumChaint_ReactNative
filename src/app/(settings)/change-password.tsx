@@ -1,6 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { FormContainer, FormInputField } from "@/components/ui/form";
-import { Header } from "@/components/ui/header/header";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Stack } from "expo-router";
@@ -8,6 +5,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { FormContainer, FormInputField } from "@/components/ui/form";
+import { Header } from "@/components/ui/header/";
 
 const changePasswordSchema = z
   .object({
@@ -40,14 +40,14 @@ export default function ChangePassword() {
   };
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-transparent">
       <Stack.Screen options={{ headerShown: false }} />
       <View className="w-full flex-row items-center justify-center pb-10">
         <Header title="Change Password" />
       </View>
 
       <ScrollView
-        className="flex-1"
+        className="flex-1 bg-transparent"
         contentContainerStyle={{
           flexGrow: 1,
           justifyContent: "space-between",
